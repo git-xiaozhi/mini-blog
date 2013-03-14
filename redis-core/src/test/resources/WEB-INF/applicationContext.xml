@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:cache="http://www.springframework.org/schema/cache"
+
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+      http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+    http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-3.1.xsd">
+
+  <aop:aspectj-autoproxy />
+  <context:annotation-config />
+
+  <context:component-scan base-package="com.xiaozhi.blog" />
+  <context:component-scan base-package="com.xiaozhi.blog.rabbitmq" />
+  <context:component-scan base-package="solr" />
+
+
+
+   <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
+	<cache:annotation-driven cache-manager="cacheManager" />
+
+	<!-- cacheManager工厂类，指定ehcache.xml的位置 -->
+	<bean id="cacheManagerFactory"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:shared="false"
+		p:configLocation="/WEB-INF/ehcache.xml" />
+	<!-- 声明cacheManager -->
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
+		p:cacheManager-ref="cacheManagerFactory" />
+
+
+  <util:properties id="globalProperties" location="/WEB-INF/configuration.properties" />
+
+  <bean id="propertyConfigurer"
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+    p:location="/WEB-INF/configuration.properties" />
+
+  <bean id="messageSource"
+    class="org.springframework.context.support.ResourceBundleMessageSource">
+    <property name="basenames">
+      <list>
+        <value>messages</value>
+        <value>redis</value>
+      </list>
+    </property>
+  </bean>
+
+<bean id="restTemplate" class="org.springframework.web.client.RestTemplate"/>
+
+  <bean id="jedisConnectionFactory"
+    class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+    p:use-pool="true" p:port="6379" p:hostName="localhost" p:database="0" />
+  <!--String-focused convenience classes -->
+  <bean id="template" class="org.springframework.data.redis.core.StringRedisTemplate"
+    p:connection-factory-ref="jedisConnectionFactory" />
+
+  <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+    p:connection-factory-ref="jedisConnectionFactory" />
+
+
+
+
+  <!-- this is the Message Driven POJO (MDP) 发布订阅消息配置 -->
+  <bean id="messageListener"
+    class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
+    <constructor-arg>
+      <bean
+        class="com.xiaozhi.blog.redis.message.DefaultMessageDelegate" />
+    </constructor-arg>
+  </bean>
+
+  <!-- and this is the message listener container... -->
+  <bean id="redisContainer"
+    class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
+    <property name="connectionFactory" ref="jedisConnectionFactory" />
+    <property name="messageListeners">
+      <!-- map of listeners and their associated topics (channels or/and patterns) -->
+      <map>
+        <entry key-ref="messageListener">
+          <bean class="org.springframework.data.redis.listener.ChannelTopic">
+            <constructor-arg value="chatroom" />
+          </bean>
+        </entry>
+      </map>
+    </property>
+  </bean>
+
+  <!-- sorl客户端配置 -->
+  <bean id="userSearchServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+      <constructor-arg>
+       <value>${solr.server.index.user}</value>
+      </constructor-arg>
+  </bean>
+  <bean id="blogSearchServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+      <constructor-arg>
+       <value>${solr.server.index.blog}</value>
+      </constructor-arg>
+  </bean>
+
+
+  <bean id="userIndexServer" class="org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer">
+      <constructor-arg index="0">
+       <value>${solr.server.index.user}</value>
+      </constructor-arg>
+      <constructor-arg index="1">
+       <value>1024</value>
+      </constructor-arg>
+      <constructor-arg index="2">
+       <value>100</value>
+      </constructor-arg>
+  </bean>
+  <bean id="blogIndexServer" class="org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer">
+      <constructor-arg index="0">
+       <value>${solr.server.index.blog}</value>
+       </constructor-arg>
+      <constructor-arg index="1">
+       <value>1024</value>
+      </constructor-arg>
+      <constructor-arg index="2">
+       <value>100</value>
+      </constructor-arg>
+  </bean>
+
+
+   <bean id="timeline" class="weibo4j.Timeline"/>
+  <bean id="comments" class="weibo4j.Comments"/>
+  <bean id="users" class="weibo4j.Users"/>
+  <bean id="friendships" class="weibo4j.Friendships"/>
+  <bean id="favorite" class="weibo4j.Favorite"/>
+
+  <!-- simple-spring-memcached配置信息 -->
+  <!--<bean id="memcachedConnectionBean" class="net.nelz.simplesm.config.MemcachedConnectionBean">
+                <property name="consistentHashing" value="true" />
+                <property name="nodeList" value="localhost:12000" />
+  </bean>
+  -->
+  <!-- simple-spring-memcached配置信息 -->
+  <!--<bean name="defaultMemcachedClient" class="com.google.code.ssm.CacheFactory">
+		<property name="cacheClientFactory">
+			<bean class="com.google.code.ssm.providers.xmemcached.MemcacheClientFactoryImpl" />
+		</property>
+		<property name="addressProvider">
+			<bean class="com.google.code.ssm.config.DefaultAddressProvider">
+				<property name="address" value="192.168.0.101:12000" />
+			</bean>
+		</property>
+		<property name="configuration">
+			<bean class="com.google.code.ssm.providers.CacheConfiguration">
+				<property name="consistentHashing" value="true" />
+			</bean>
+		</property>
+  </bean>-->
+ <!-- <import resource="classpath:simplesm-context.xml" />-->
+  <!-- simple-spring-memcached配置信息 -->
+<import resource="mongodb.xml"/>
+<import resource="security.xml"/>
+<import resource="rabbitMQ.xml"/>
+<import resource="dubbo.xml"/>
+
+</beans>

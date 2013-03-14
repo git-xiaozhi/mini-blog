@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+  xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:task="http://www.springframework.org/schema/task" xmlns:aop="http://www.springframework.org/schema/aop"
+  xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+
+  xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+      http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+    http://www.springframework.org/schema/aop
+      http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.1.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
+        http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
+        http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
+
+  <aop:aspectj-autoproxy />
+  <context:annotation-config />
+  
+  <context:component-scan base-package="com.xiaozhi.blog" />
+  <context:component-scan base-package="solr" />
+  <context:component-scan base-package="rabbitmq" />
+  <context:component-scan base-package="mina.remote" />
+  <context:component-scan base-package="netty" />
+  
+
+  <task:annotation-driven executor="myExecutor" scheduler="myScheduler" />
+  <!--配置异步多线程池 -->
+  <task:executor id="myExecutor" pool-size="5" />
+  <!--配置任务调度池 -->
+  <task:scheduler id="myScheduler" pool-size="10" />
+
+
+  
+
+    <bean id="propertyConfigurer"
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+    p:location="/WEB-INF/configuration.properties" />
+
+    <util:properties id="globalProperties" location="/WEB-INF/configuration.properties" />
+
+
+
+  <bean id="userSearchServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+      <constructor-arg>
+       <value>${solr.server.index.user}</value>
+      </constructor-arg>
+  </bean>
+  <bean id="blogSearchServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+      <constructor-arg>
+       <value>${solr.server.index.blog}</value>
+      </constructor-arg>
+  </bean>
+
+  <!-- sorl客户端配置 -->
+  <bean id="userIndexServer" class="org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer">
+      <constructor-arg index="0">
+       <value>${solr.server.index.user}</value>
+      </constructor-arg>
+      <constructor-arg index="1">
+       <value>1024</value>
+      </constructor-arg>
+      <constructor-arg index="2">
+       <value>100</value>
+      </constructor-arg>
+  </bean>
+  <bean id="blogIndexServer" class="org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer">
+      <constructor-arg index="0">
+       <value>${solr.server.index.blog}</value>
+       </constructor-arg>
+      <constructor-arg index="1">
+       <value>1024</value>
+      </constructor-arg>
+      <constructor-arg index="2">
+       <value>100</value>
+      </constructor-arg>
+  </bean>
+
+
+    <bean id="jedisConnectionFactory"
+    class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+    p:use-pool="true" p:port="6379" p:hostName="localhost" />
+
+  <!--String-focused convenience classes -->
+  <bean id="template" class="org.springframework.data.redis.core.StringRedisTemplate"
+    p:connection-factory-ref="jedisConnectionFactory" />
+
+
+  <!--<import resource="cas-security.xml"/>-->
+  <!--<import resource="security.xml"/>-->
+  <import resource="mongodb.xml"/>
+  <import resource="dubbo.xml"/>
+  
+  <!-- netty编程测试 -->
+  <bean id="test" class="netty.server.Test" />
+  <bean id="server" class="netty.server.Server" />
+  <bean id="proxyService" class="netty.server.ProxyService" />
+  
+  <bean id="proxyServer" class="netty.server.ProxyServer" />
+  <bean id="serverContant" class="netty.server.ServerContant" />
+  
+
+
+
+</beans>

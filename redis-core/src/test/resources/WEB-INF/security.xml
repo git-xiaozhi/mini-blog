@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:oauth="http://www.springframework.org/schema/security/oauth2" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+		http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+   <!--
+  <security:http pattern="/signIn" security='none'/>
+  <security:http pattern="/static/**" security='none'/>
+   -->
+
+  <security:http auto-config="true" access-denied-page="/signIn">
+      <security:intercept-url pattern="/error" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+      <security:intercept-url pattern="/signIn" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+      <security:intercept-url pattern="/static/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+     <!--<security:intercept-url pattern="/user/upload" access="IS_AUTHENTICATED_ANONYMOUSLY" />-->
+
+    <!--  <security:remember-me user-service-ref="customUserDetailsService" />-->
+    <security:remember-me services-ref="rememberMeServices" />
+
+
+    <security:intercept-url pattern="/main" access="ROLE_USER" />
+    <security:intercept-url pattern="/u/**" access="ROLE_USER" />
+    <security:intercept-url pattern="/user/**" access="ROLE_USER" />
+    <security:intercept-url pattern="/manage/**" access="ROLE_USER" />
+    <security:intercept-url pattern="/blog/**" access="ROLE_USER" />
+    <security:intercept-url pattern="/comment/**" access="ROLE_USER" />
+    <security:intercept-url pattern="/bind/**" access="ROLE_USER" />
+    <security:intercept-url pattern="/blog/sina/**" access="ROLE_USER" />
+    <security:intercept-url pattern="/blog/sina/friend/**" access="ROLE_USER" />
+
+
+    <!-- 二次登录会让第一次登录失效 -->
+    <!-- <security:session-management invalid-session-url="/signIn"> <security:concurrency-control
+      max-sessions="1"/> </security:session-management> -->
+
+    <!-- login-page:默认指定的登录页面. authentication-failure-url:出错后跳转页面. default-target-url:成功登陆后跳转页面 -->
+    <security:form-login login-page="/signIn"
+      default-target-url="/main" authentication-failure-url="/signIn?error=true" />
+    <!-- logout-success-url:成功注销后跳转到的页面; -->
+    <security:logout logout-success-url="/signIn" />
+
+    <!--apply the oauth client oauth2ClientFilter -->
+    <security:custom-filter ref="oauth2ClientFilter" after="EXCEPTION_TRANSLATION_FILTER" />
+  </security:http>
+
+
+  <security:authentication-manager alias="authenticationManager">
+    <security:authentication-provider ref="daoAuthenticationProvider"/>
+    <security:authentication-provider ref="rememberMeAuthenticationProvider"/>
+  </security:authentication-manager>
+
+
+  <!--apply the oauth client context -->
+  <oauth:client id="oauth2ClientFilter" />
+  <!--define an oauth 2 resource for imageserver -->
+  <oauth:resource id="imageserver" type="authorization_code" client-id="tonr" client-secret="secret"
+		access-token-uri="${accessTokenUri}" user-authorization-uri="${userAuthorizationUri}" scope="read" />
+  <oauth:rest-template id="oAuth2RestTemplate" resource="imageserver" />
+
+
+  <bean id="daoAuthenticationProvider"
+         class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+         <property name="userDetailsService" ref="customUserDetailsService" />
+         <property name="passwordEncoder" ref="md5PasswordEncoder" /><!--如果无此项则默认是明码密码 -->
+    </bean>
+
+    <bean id="md5PasswordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+
+
+
+  <bean id="customUserDetailsService" class="com.tianji.test.core.redis.UserDetailsServiceImpl"
+	p:userInfoService-ref="userInfoService" />
+	<bean id="userInfoService" class="com.tianji.test.core.redis.MongoUserInfoService"
+	p:mongoTemplate-ref="mongoTemplate"/>
+
+  <bean id="rememberMeServices"
+    class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+    <property name="userDetailsService" ref="customUserDetailsService" />
+    <property name="key" value="springsecurityCookies1" />
+    <property name="alwaysRemember" value="true"></property>
+    <property name="tokenValiditySeconds" value="86400"></property>
+    <property name="parameter" value="_spring_security_remember_me"></property>
+  </bean>
+
+
+  <bean id="rememberMeAuthenticationProvider"
+        class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+        <property name="key" value="springsecurityCookies1" />
+    </bean>
+
+</beans>
