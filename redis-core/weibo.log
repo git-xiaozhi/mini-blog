@@ -1,0 +1,152 @@
+0    DEBUG [2013-05-14 09:42:59]  SpringJUnit4ClassRunner constructor called with [class org.redis.core.SinaBlogTest].
+58   DEBUG [2013-05-14 09:42:59]  Delegating to GenericXmlContextLoader to process context configuration [ContextConfigurationAttributes@5e179a declaringClass = 'org.redis.core.ServiceTestBase', locations = '{/WEB-INF/applicationContext.xml}', classes = '{}', inheritLocations = true, contextLoaderClass = 'org.springframework.test.context.ContextLoader'].
+58   DEBUG [2013-05-14 09:42:59]  Could not find an 'annotation declaring class' for annotation type [interface org.springframework.test.context.ActiveProfiles] and class [class org.redis.core.SinaBlogTest]
+59   INFO  [2013-05-14 09:42:59]  @TestExecutionListeners is not present for class [class org.redis.core.SinaBlogTest]: using defaults.
+90   DEBUG [2013-05-14 09:42:59]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+90   DEBUG [2013-05-14 09:42:59]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+92   DEBUG [2013-05-14 09:42:59]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+92   DEBUG [2013-05-14 09:42:59]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+95   DEBUG [2013-05-14 09:42:59]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+95   DEBUG [2013-05-14 09:42:59]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+95   DEBUG [2013-05-14 09:42:59]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+96   DEBUG [2013-05-14 09:42:59]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+96   DEBUG [2013-05-14 09:42:59]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+96   DEBUG [2013-05-14 09:42:59]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+98   DEBUG [2013-05-14 09:42:59]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+98   DEBUG [2013-05-14 09:42:59]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+99   DEBUG [2013-05-14 09:42:59]  Performing dependency injection for test context [[TestContext@11e1e67 testClass = SinaBlogTest, testInstance = org.redis.core.SinaBlogTest@5e176f, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1549f94 testClass = SinaBlogTest, locations = '{classpath:/WEB-INF/applicationContext.xml}', classes = '{}', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader']]].
+99   DEBUG [2013-05-14 09:42:59]  Delegating to GenericXmlContextLoader to load context from [MergedContextConfiguration@1549f94 testClass = SinaBlogTest, locations = '{classpath:/WEB-INF/applicationContext.xml}', classes = '{}', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader'].
+99   DEBUG [2013-05-14 09:42:59]  Loading ApplicationContext for merged context configuration [[MergedContextConfiguration@1549f94 testClass = SinaBlogTest, locations = '{classpath:/WEB-INF/applicationContext.xml}', classes = '{}', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader']].
+156  DEBUG [2013-05-14 09:42:59]  Initializing new StandardEnvironment
+157  DEBUG [2013-05-14 09:42:59]  Adding [systemProperties] PropertySource with lowest search precedence
+158  DEBUG [2013-05-14 09:42:59]  Adding [systemEnvironment] PropertySource with lowest search precedence
+159  DEBUG [2013-05-14 09:42:59]  Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+212  DEBUG [2013-05-14 09:42:59]  Initializing new StandardEnvironment
+212  DEBUG [2013-05-14 09:42:59]  Adding [systemProperties] PropertySource with lowest search precedence
+212  DEBUG [2013-05-14 09:42:59]  Adding [systemEnvironment] PropertySource with lowest search precedence
+212  DEBUG [2013-05-14 09:42:59]  Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+219  INFO  [2013-05-14 09:42:59]  Loading XML bean definitions from class path resource [WEB-INF/applicationContext.xml]
+220  ERROR [2013-05-14 09:42:59]  Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@472d48] to prepare test instance [org.redis.core.SinaBlogTest@5e176f]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:157)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:109)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:75)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:321)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:211)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:288)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:290)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [WEB-INF/applicationContext.xml]; nested exception is java.io.FileNotFoundException: class path resource [WEB-INF/applicationContext.xml] cannot be opened because it does not exist
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:341)
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:174)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:209)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:180)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:243)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadBeanDefinitions(AbstractGenericContextLoader.java:205)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:100)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:1)
+	at org.springframework.test.context.support.DelegatingSmartContextLoader.loadContext(DelegatingSmartContextLoader.java:228)
+	at org.springframework.test.context.TestContext.loadApplicationContext(TestContext.java:124)
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:148)
+	... 26 more
+Caused by: java.io.FileNotFoundException: class path resource [WEB-INF/applicationContext.xml] cannot be opened because it does not exist
+	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:157)
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:328)
+	... 37 more
+224  DEBUG [2013-05-14 09:42:59]  After test class: context [[TestContext@11e1e67 testClass = SinaBlogTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@1549f94 testClass = SinaBlogTest, locations = '{classpath:/WEB-INF/applicationContext.xml}', classes = '{}', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader']]], dirtiesContext [false].
+0    DEBUG [2013-05-14 09:44:27]  SpringJUnit4ClassRunner constructor called with [class org.redis.core.SinaBlogTest].
+29   DEBUG [2013-05-14 09:44:27]  Delegating to GenericXmlContextLoader to process context configuration [ContextConfigurationAttributes@8c1dd9 declaringClass = 'org.redis.core.ServiceTestBase', locations = '{/WEB-INF/applicationContext.xml}', classes = '{}', inheritLocations = true, contextLoaderClass = 'org.springframework.test.context.ContextLoader'].
+30   DEBUG [2013-05-14 09:44:27]  Could not find an 'annotation declaring class' for annotation type [interface org.springframework.test.context.ActiveProfiles] and class [class org.redis.core.SinaBlogTest]
+31   INFO  [2013-05-14 09:44:27]  @TestExecutionListeners is not present for class [class org.redis.core.SinaBlogTest]: using defaults.
+42   DEBUG [2013-05-14 09:44:27]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+42   DEBUG [2013-05-14 09:44:27]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+44   DEBUG [2013-05-14 09:44:27]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+44   DEBUG [2013-05-14 09:44:27]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+46   DEBUG [2013-05-14 09:44:27]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+46   DEBUG [2013-05-14 09:44:27]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+47   DEBUG [2013-05-14 09:44:27]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+47   DEBUG [2013-05-14 09:44:27]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+47   DEBUG [2013-05-14 09:44:27]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+47   DEBUG [2013-05-14 09:44:27]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+49   DEBUG [2013-05-14 09:44:27]  Retrieved @ProfileValueSourceConfiguration [null] for test class [org.redis.core.SinaBlogTest]
+49   DEBUG [2013-05-14 09:44:27]  Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [org.redis.core.SinaBlogTest]
+50   DEBUG [2013-05-14 09:44:27]  Performing dependency injection for test context [[TestContext@1549f94 testClass = SinaBlogTest, testInstance = org.redis.core.SinaBlogTest@b8c8e6, testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@18d9850 testClass = SinaBlogTest, locations = '{classpath:/WEB-INF/applicationContext.xml}', classes = '{}', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader']]].
+50   DEBUG [2013-05-14 09:44:27]  Delegating to GenericXmlContextLoader to load context from [MergedContextConfiguration@18d9850 testClass = SinaBlogTest, locations = '{classpath:/WEB-INF/applicationContext.xml}', classes = '{}', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader'].
+50   DEBUG [2013-05-14 09:44:27]  Loading ApplicationContext for merged context configuration [[MergedContextConfiguration@18d9850 testClass = SinaBlogTest, locations = '{classpath:/WEB-INF/applicationContext.xml}', classes = '{}', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader']].
+88   DEBUG [2013-05-14 09:44:27]  Initializing new StandardEnvironment
+89   DEBUG [2013-05-14 09:44:27]  Adding [systemProperties] PropertySource with lowest search precedence
+90   DEBUG [2013-05-14 09:44:27]  Adding [systemEnvironment] PropertySource with lowest search precedence
+90   DEBUG [2013-05-14 09:44:27]  Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+118  DEBUG [2013-05-14 09:44:27]  Initializing new StandardEnvironment
+118  DEBUG [2013-05-14 09:44:27]  Adding [systemProperties] PropertySource with lowest search precedence
+118  DEBUG [2013-05-14 09:44:27]  Adding [systemEnvironment] PropertySource with lowest search precedence
+119  DEBUG [2013-05-14 09:44:27]  Initialized StandardEnvironment with PropertySources [systemProperties,systemEnvironment]
+125  INFO  [2013-05-14 09:44:27]  Loading XML bean definitions from class path resource [WEB-INF/applicationContext.xml]
+126  ERROR [2013-05-14 09:44:27]  Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2bc3f5] to prepare test instance [org.redis.core.SinaBlogTest@b8c8e6]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:157)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:109)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:75)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:321)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:211)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:288)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:15)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:290)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:193)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:52)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:191)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:42)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:184)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:28)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:31)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:236)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+Caused by: org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [WEB-INF/applicationContext.xml]; nested exception is java.io.FileNotFoundException: class path resource [WEB-INF/applicationContext.xml] cannot be opened because it does not exist
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:341)
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:174)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:209)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:180)
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:243)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadBeanDefinitions(AbstractGenericContextLoader.java:205)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:100)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:1)
+	at org.springframework.test.context.support.DelegatingSmartContextLoader.loadContext(DelegatingSmartContextLoader.java:228)
+	at org.springframework.test.context.TestContext.loadApplicationContext(TestContext.java:124)
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:148)
+	... 26 more
+Caused by: java.io.FileNotFoundException: class path resource [WEB-INF/applicationContext.xml] cannot be opened because it does not exist
+	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:157)
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:328)
+	... 37 more
+130  DEBUG [2013-05-14 09:44:27]  After test class: context [[TestContext@1549f94 testClass = SinaBlogTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [MergedContextConfiguration@18d9850 testClass = SinaBlogTest, locations = '{classpath:/WEB-INF/applicationContext.xml}', classes = '{}', activeProfiles = '{}', contextLoader = 'org.springframework.test.context.support.DelegatingSmartContextLoader']]], dirtiesContext [false].

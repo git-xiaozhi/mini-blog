@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.tianji.test.core.redis.LoginHelper;
 import com.xiaozhi.blog.formbean.UserForm;
+import com.xiaozhi.blog.img.ImageService;
 import com.xiaozhi.blog.service.UserService;
 import com.xiaozhi.blog.utils.FileUtil;
 import com.xiaozhi.blog.vo.User;
@@ -33,6 +34,8 @@ public class UserInfoManageController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ImageService imageService;
 
     /**
      * 编辑用户信息表单
@@ -90,18 +93,12 @@ public class UserInfoManageController {
     public @ResponseBody String uploadOriginalImage(ModelMap model,@RequestParam("filename") MultipartFile logo,HttpServletRequest  resquest ) {
 
         try {
-            if(logger.isDebugEnabled())logger.debug("#########################"+logo.getOriginalFilename());
-            byte[] a = logo.getBytes();
-            String filePath = resquest.getRealPath(resquest.getServletPath());
-
             int originalwidth = FileUtil.getImageWidth(logo.getInputStream());
-            String name=FileUtil.uploadOriginalFileHandle(a, filePath, LoginHelper.getUserId(), logo.getOriginalFilename(),originalwidth);
-            return resquest.getContextPath()+resquest.getServletPath()+"/"+name;
+            String url=this.imageService.uploadOriginalFileHandle(logo.getBytes(), LoginHelper.getUserId(), logo.getOriginalFilename(),originalwidth);
+            return url;
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -126,8 +123,7 @@ public class UserInfoManageController {
 
         try {
             String uid=LoginHelper.getUserId();
-            String filePath = resquest.getRealPath(url);
-            String name=this.userService.ProHandle(filePath, uid, width, heigth, x, y);
+            String name=this.imageService.ProHandle(uid, url.substring(url.lastIndexOf("/")), width, heigth, x, y);
             if(name!=null)this.userService.editPortrait(url.substring(0,url.lastIndexOf("/")+1)+name, uid);
 
             return "redirect:/user/userPortrait";

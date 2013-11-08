@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.xiaozhi.blog.utils.ListPage;
-import com.xiaozhi.blog.utils.SolrPage;
 import com.xiaozhi.blog.vo.User;
 
 public class EchoImpl implements EchoService {

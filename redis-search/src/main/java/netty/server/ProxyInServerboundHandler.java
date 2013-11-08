@@ -17,8 +17,11 @@ package netty.server;
 
 import java.net.InetSocketAddress;
 
+import javassist.expr.NewArray;
+
 
 import netty.Reflection;
+import netty.model.BrodcastMessage;
 import netty.model.OperatorMessage;
 import netty.server.coder.XLClientDecoder;
 import netty.server.coder.XLResponse;
@@ -35,6 +38,7 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 import org.jboss.netty.channel.socket.ClientSocketChannelFactory;
 import org.jboss.netty.handler.ssl.SslHandler;
+
 
 
 public class ProxyInServerboundHandler extends SimpleChannelUpstreamHandler {
@@ -112,22 +116,20 @@ public class ProxyInServerboundHandler extends SimpleChannelUpstreamHandler {
     	
 		Object message = e.getMessage();
 		if(message instanceof OperatorMessage){
-		  System.out.println("Message is: " + message.toString());		
 		  OperatorMessage om = (OperatorMessage) message;
 		  /**本代理服务器直接处理请求*/
 		  if(om.getLogin()){
 		   e.getChannel().write(excMethod(om));//执行用户方法
 		   /**请求被代理服务器*/
 		  }else{
-			  
-		        synchronized (trafficLock) {
-		        	outboundChannel.write(excMethod(om));		        	
-		            // If outboundChannel is saturated, do not read until notified in
-		            // OutboundHandler.channelInterestChanged().
-		            if (!outboundChannel.isWritable()) {
-		                e.getChannel().setReadable(false);
-		            }
-		        }
+	        synchronized (trafficLock) {
+	        	outboundChannel.write(excMethod(om));		        	
+	            // If outboundChannel is saturated, do not read until notified in
+	            // OutboundHandler.channelInterestChanged().
+	            if (!outboundChannel.isWritable()) {
+	                e.getChannel().setReadable(false);
+	            }
+	        }
 			  
 		  }
 		}
@@ -185,7 +187,13 @@ public class ProxyInServerboundHandler extends SimpleChannelUpstreamHandler {
             synchronized (trafficLock) {
             	//这里需要转换数据类型写入客户端通道中msg--->返回对象
 		        XLResponse xLResponse = (XLResponse)e.getMessage();
-	        	inboundChannel.write(xLResponse.getValues());
+		        if(xLResponse.getResult()!=0){
+	        	    inboundChannel.write(xLResponse.getValues());//普通方法调用回应
+		        }else{
+		        	System.out.println("------------------------------------------>"+xLResponse.getValue("time"));
+		        	//inboundChannel.write(new BrodcastMessage(xLResponse.getValue("time")));//系统广播
+		        	inboundChannel.write(new BrodcastMessage(xLResponse.getValue("time")));
+		        }
 		        
                 // If inboundChannel is saturated, do not read until notified in
                 // HexDumpProxyInboundHandler.channelInterestChanged().
@@ -248,6 +256,7 @@ public class ProxyInServerboundHandler extends SimpleChannelUpstreamHandler {
             this.sslHandler = sslHandler;
         }
         
+       @Override
        public void operationComplete(ChannelFuture future) throws Exception {
             if (future.isSuccess()) {
                 ServerContant.allChannels.add(future.getChannel());//将接入的连接加入ChannelGroup

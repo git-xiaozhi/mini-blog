@@ -1,6 +1,5 @@
 package com.xiaozhi.blog.web;
 
-import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.tianji.test.core.redis.LoginHelper;
+import com.xiaozhi.blog.img.ImageService;
 import com.xiaozhi.blog.oauth2client.Oauth2AccesService;
 import com.xiaozhi.blog.service.BlogService;
 import com.xiaozhi.blog.service.VideoService;
@@ -39,6 +39,9 @@ public class BlogController{
 
     @Autowired
     private BlogService blogService;
+    
+    @Autowired
+    private ImageService imageService;
 
 
     @Autowired
@@ -121,19 +124,10 @@ public class BlogController{
     public @ResponseBody String upload(ModelMap model,@RequestParam("filename") MultipartFile logo,HttpServletRequest  resquest ) {
 
         try {
-            byte[] a = logo.getBytes();
-            String filePath = resquest.getRealPath(resquest.getServletPath());
-
-            if(logger.isDebugEnabled()){
-
-                logger.debug("------------------------->"+filePath+File.separator+LoginHelper.getUserId());
-                logger.debug("------------------------->"+logo.getOriginalFilename());
-
-            }
             int originalwidth = FileUtil.getImageWidth(logo.getInputStream());
-            String name=FileUtil.uploadFileHandle(a, filePath, LoginHelper.getUserId(), logo.getOriginalFilename(),originalwidth);
+            String url=this.imageService.uploadFileHandle(logo.getBytes(), LoginHelper.getUserId(), logo.getOriginalFilename(),originalwidth);
 
-            return resquest.getServletPath()+"/"+name;
+            return url;
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

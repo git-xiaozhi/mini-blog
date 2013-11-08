@@ -1,7 +1,7 @@
 package netty.server.coder;
  
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
  
 /**
  *  @author hankchen
@@ -35,7 +35,8 @@ public class XLRequest {
     private int command;// 命令
     private int length;// 数据包长
      
-    private Map<String,String> params=new HashMap<String, String>(); //参数
+    //用ConcurrentHashMap 防止由于线程竞争产生EOFException错误
+    private Map<String,String> params=new ConcurrentHashMap<String, String>(); //参数
      
     private String ip;
  

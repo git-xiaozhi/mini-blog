@@ -9,6 +9,7 @@
   <div><a href="/blog/sina/follow/followers"/>我的粉丝</a></div>
   <div><a href="/blog/sina/follow/followings"/>我的关注</a></div>
   <div><a href="/blog/sina/favorites/favoritetimeline"/>我的收藏</a></div>
+  <div><a href="/blog/sina/getSinaBlogs"/>定时微博</a></div>
 </div>
 
 

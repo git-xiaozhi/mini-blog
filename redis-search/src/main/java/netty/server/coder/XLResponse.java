@@ -1,7 +1,7 @@
 package netty.server.coder;
  
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
  
 /**
  *  @author hankchen
@@ -34,8 +34,9 @@ public class XLResponse {
     private int sessionid;// 会话ID
     private int result;// 结果码
     private int length;// 数据包长
-     
-    private Map<String,String> values=new HashMap<String, String>();
+    
+    //用ConcurrentHashMap 防止由于线程竞争产生EOFException错误
+    private Map<String,String> values=new ConcurrentHashMap<String, String>();
      
     private String ip;
      

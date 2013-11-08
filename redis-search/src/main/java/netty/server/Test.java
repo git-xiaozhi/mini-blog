@@ -24,7 +24,7 @@ public class Test {
 	
 	
     public static void broadcastMessage(String message) throws InterruptedException{
-		ServerManger.broadcast(new BrodcastMessage("---------------> brodcast "+message+" from Server"));
+		//ServerManger.broadcast(new BrodcastMessage("---------------> brodcast "+message+" from Server"));
 	}
 
 }

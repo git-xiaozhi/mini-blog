@@ -35,8 +35,10 @@
 
 	<mvc:resources mapping="/blog/upload/**" location="/blog/upload/" />
 	<mvc:resources mapping="/blog/sina/upload/**" location="/blog/sina/upload/" />
+	<mvc:resources mapping="/blog/sina/timer/**" location="/blog/sina/timer/" />
 	<mvc:resources mapping="/blog/searchhome" location="/search/blogsearch" />
 	<mvc:resources mapping="/user/upload/**" location="/user/upload/" />
+
 
 
 
@@ -58,8 +60,8 @@
 		view-name="/manage/group/addForm" />
 
 
-	<!-- - Message source for this context, loaded from localized "messages_xx"
-		files. - Could also reside in the root application context, as it is generic,
+	<!-- - Message source for this context, loaded from localized "messages_xx" 
+		files. - Could also reside in the root application context, as it is generic, 
 		- but is currently just used within Retwis's web tier. -->
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource">
@@ -85,22 +87,22 @@
 	<bean id="template" class="org.springframework.data.redis.core.StringRedisTemplate"
 		p:connection-factory-ref="jedisConnectionFactory" />
 
-	<!-- <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate"
+	<!-- <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" 
 		p:connection-factory-ref="jedisConnectionFactory"/> -->
 
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
 	</bean>
 
 	<!-- this is the Message Driven POJO (MDP) 发布订阅消息配置 -->
-	<!-- <bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter">
-		<constructor-arg> <bean class="com.xiaozhi.blog.redis.message.DefaultMessageDelegate"
+	<!-- <bean id="messageListener" class="org.springframework.data.redis.listener.adapter.MessageListenerAdapter"> 
+		<constructor-arg> <bean class="com.xiaozhi.blog.redis.message.DefaultMessageDelegate" 
 		/> </constructor-arg> </bean> -->
 	<!-- and this is the message listener container... -->
-	<!-- <bean id="redisContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer">
-		<property name="connectionFactory" ref="jedisConnectionFactory" /> <property
-		name="messageListeners"> <map> <entry key-ref="messageListener"> <bean class="org.springframework.data.redis.listener.ChannelTopic">
+	<!-- <bean id="redisContainer" class="org.springframework.data.redis.listener.RedisMessageListenerContainer"> 
+		<property name="connectionFactory" ref="jedisConnectionFactory" /> <property 
+		name="messageListeners"> <map> <entry key-ref="messageListener"> <bean class="org.springframework.data.redis.listener.ChannelTopic"> 
 		<constructor-arg value="chatroom"/> </bean> </entry> </map> </property> </bean> -->
-	<!-- <bean class="org.springframework.data.redis.samples.retwisj.exception.QADHandlerExceptionResolver">
+	<!-- <bean class="org.springframework.data.redis.samples.retwisj.exception.QADHandlerExceptionResolver"> 
 		</bean> -->
 	<!--<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> -->
 	<!--<bean id="exceptionResolver" class="org.springframework.data.redis.samples.retwisj.exception.CustomMappingExceptionResolver"> -->
@@ -109,61 +111,55 @@
 	<!-- 定义异常处理页面用来获取异常信息的变量名，默认名为exception -->
 	<!--<property name="exceptionAttribute" value="ex"></property> -->
 	<!-- 定义需要特殊处理的异常，用类名或完全路径名作为key，异常页名作为值 -->
-	<!-- <property name="exceptionMappings"> <props> <prop key="org.springframework.web.servlet.PageNotFound">redirect:http://tianji.com</prop>
-		<prop key="IOException">error/ioexp</prop> <prop key="java.sql.SQLException">error/sqlexp</prop>
+	<!-- <property name="exceptionMappings"> <props> <prop key="org.springframework.web.servlet.PageNotFound">redirect:http://tianji.com</prop> 
+		<prop key="IOException">error/ioexp</prop> <prop key="java.sql.SQLException">error/sqlexp</prop> 
 		</props> </property> -->
 	<!-- </bean> -->
 
 
 	<!-- sorl客户端配置 -->
-	<bean id="userSearchServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-		<constructor-arg>
-			<value>${solr.server.index.user}</value>
-		</constructor-arg>
-	</bean>
-	<bean id="blogSearchServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-		<constructor-arg>
-			<value>${solr.server.index.blog}</value>
-		</constructor-arg>
-	</bean>
+	<!-- <bean id="userSearchServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer"> 
+		<constructor-arg> <value>${solr.server.index.user}</value> </constructor-arg> 
+		</bean> <bean id="blogSearchServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer"> 
+		<constructor-arg> <value>${solr.server.index.blog}</value> </constructor-arg> 
+		</bean> -->
 
 	<!-- sorl客户端配置 -->
-	<bean id="userIndexServer"
-		class="org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer">
-		<constructor-arg index="0">
-			<value>${solr.server.index.user}</value>
-		</constructor-arg>
-		<constructor-arg index="1">
-			<value>1024</value>
-		</constructor-arg>
-		<constructor-arg index="2">
-			<value>100</value>
-		</constructor-arg>
-	</bean>
-	<bean id="blogIndexServer"
-		class="org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer">
-		<constructor-arg index="0">
-			<value>${solr.server.index.blog}</value>
-		</constructor-arg>
-		<constructor-arg index="1">
-			<value>1024</value>
-		</constructor-arg>
-		<constructor-arg index="2">
-			<value>100</value>
-		</constructor-arg>
-	</bean>
-
+	<!-- <bean id="userIndexServer" class="org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer"> 
+		<constructor-arg index="0"> <value>${solr.server.index.user}</value> </constructor-arg> 
+		<constructor-arg index="1"> <value>1024</value> </constructor-arg> <constructor-arg 
+		index="2"> <value>100</value> </constructor-arg> </bean> <bean id="blogIndexServer" 
+		class="org.apache.solr.client.solrj.impl.ConcurrentUpdateSolrServer"> <constructor-arg 
+		index="0"> <value>${solr.server.index.blog}</value> </constructor-arg> <constructor-arg 
+		index="1"> <value>1024</value> </constructor-arg> <constructor-arg index="2"> 
+		<value>100</value> </constructor-arg> </bean> -->
 
 
 	<!-- simple-spring-memcached配置信息 -->
-	<!--<bean name="defaultMemcachedClient" class="com.google.code.ssm.CacheFactory">
-		<property name="cacheClientFactory"> <bean class="com.google.code.ssm.providers.xmemcached.MemcacheClientFactoryImpl"
-		/> </property> <property name="addressProvider"> <bean class="com.google.code.ssm.config.DefaultAddressProvider">
-		<property name="address" value="localhost:12000" /> </bean> </property> <property
-		name="configuration"> <bean class="com.google.code.ssm.providers.CacheConfiguration">
+	<!--<bean name="defaultMemcachedClient" class="com.google.code.ssm.CacheFactory"> 
+		<property name="cacheClientFactory"> <bean class="com.google.code.ssm.providers.xmemcached.MemcacheClientFactoryImpl" 
+		/> </property> <property name="addressProvider"> <bean class="com.google.code.ssm.config.DefaultAddressProvider"> 
+		<property name="address" value="localhost:12000" /> </bean> </property> <property 
+		name="configuration"> <bean class="com.google.code.ssm.providers.CacheConfiguration"> 
 		<property name="consistentHashing" value="true" /> </bean> </property> </bean> -->
 	<!--<import resource="classpath:simplesm-context.xml" /> -->
 	<!-- simple-spring-memcached配置信息结束 -->
+
+	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="idleConnectionTestPeriod" value="60" />
+		<property name="idleMaxAge" value="240" />
+		<property name="maxConnectionsPerPartition" value="5" />
+		<property name="minConnectionsPerPartition" value="10" />
+		<property name="partitionCount" value="3" />
+		<property name="acquireIncrement" value="1" />
+		<property name="statementsCacheSize" value="100" />
+		<property name="releaseHelperThreads" value="3" />
+	</bean>
+
 
 
 	<!--<import resource="cas-security.xml"/> -->
@@ -171,15 +167,13 @@
 	<import resource="mongodb.xml" />
 	<import resource="rabbitMQ.xml" />
 	<import resource="dubbo.xml" />
-
+    <import resource="quartz.xml" />
 
 	<bean id="timeline" class="weibo4j.Timeline" />
 	<bean id="comments" class="weibo4j.Comments" />
 	<bean id="users" class="weibo4j.Users" />
 	<bean id="friendships" class="weibo4j.Friendships" />
 	<bean id="favorite" class="weibo4j.Favorite" />
-
-
 
 
 </beans>

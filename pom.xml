@@ -12,11 +12,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<modules>
+	    <module>app-search</module>
 		<module>redis-core</module>
 		<module>redis-webapp</module>
 		<module>redis-search</module>
 		<module>redis-api</module>
 		<module>redis-dao</module>
+		<module>app-image-server</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

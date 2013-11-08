@@ -22,6 +22,10 @@
 
     <link rel="stylesheet" type="text/css" href="/static/styles/imgareaselect-default.css" />
     <script type="text/javascript" src="/static/js/jquery.imgareaselect.min.js"></script>
+    
+    
+    <link rel="stylesheet" type="text/css" href="/static/js/timer/datePicker.css" />
+    <script type="text/javascript" src="/static/js/timer/jquery.datePicker.min-2.1.2.js"></script>
 
 
 

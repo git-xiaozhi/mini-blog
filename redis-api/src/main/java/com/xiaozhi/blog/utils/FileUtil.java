@@ -43,8 +43,7 @@ public class FileUtil {
         }
         return filename;
     }
-
-
+    
     /**
      * 微博图片按宽度比例压缩
      * @param a
@@ -89,36 +88,6 @@ public class FileUtil {
 
 
 
-    /**
-     * 头像原始图片上传处理
-     * @param a
-     * @param filePath
-     * @param uid
-     * @param filename
-     * @param width
-     * @return
-     * @throws IOException
-     * @throws InterruptedException
-     */
-    public static String uploadOriginalFileHandle(byte[] a,String filePath,String uid,String filename,int width) throws IOException, InterruptedException{
-        if(logger.isDebugEnabled()){
-
-            logger.debug("------------------------->"+filePath+File.separator+uid);
-        }
-        File dir=new File(filePath+File.separator+uid);
-        if(!dir.exists())dir.mkdir();
-
-        //生成大图片
-        int bigWidth=width;
-        if(width>1000)bigWidth=1000;
-        String returnfileName = uid+"_original."+getExtension(filename);
-        String path=filePath+File.separator+uid+File.separator+returnfileName;
-        byte[] big = Im4javaUitl.resiizeImage(bigWidth, null, a);//按宽度等比压缩
-        FileCopyUtils.copy(big, new File(path));
-
-        return uid+"/"+returnfileName;
-    }
-    
     
     /**
      * 临时保存sina上传图片，不对图片进行处理
@@ -139,7 +108,31 @@ public class FileUtil {
           File dir=new File(filePath+File.separator+uid);
           if(!dir.exists())dir.mkdir();
 
+          
           String returnfileName = "sina_temp."+getExtension(filename);
+          String path=filePath+File.separator+uid+File.separator+returnfileName;
+          FileCopyUtils.copy(a, new File(path));
+
+          return uid+"/"+returnfileName;
+      }
+      
+      
+      /**
+       * 定时发送功能上传图片
+       * @param a
+       * @param filePath
+       * @param uid
+       * @param filename
+       * @return
+       * @throws IOException
+       * @throws InterruptedException
+       */
+      public static String sinaUploadFile(byte[] a,String filePath,String uid,String filename) throws IOException, InterruptedException{
+          File dir=new File(filePath+File.separator+uid);
+          if(!dir.exists())dir.mkdirs();
+
+          long time = System.currentTimeMillis();
+          String returnfileName = time+"."+getExtension(filename);
           String path=filePath+File.separator+uid+File.separator+returnfileName;
           FileCopyUtils.copy(a, new File(path));
 

@@ -54,7 +54,7 @@ public class SinaBlogController {
 	private Friendships friendships;
 
 	@Autowired
-	private  MongoUserDao retwis;
+	private  MongoUserDao mongoUserDao;
 
 	@Autowired
 	private BlogTime blogTime;
@@ -69,7 +69,7 @@ public class SinaBlogController {
 	@RequestMapping(value = "hometimeline", method = RequestMethod.GET)
     public String hometimeline(@RequestParam(required = false,defaultValue="1") Integer page,
     		HttpServletRequest request,Model model) {
-		SinaAccessToken accessToken = retwis.getAccessTokenByUser(LoginHelper.getUserId());
+		SinaAccessToken accessToken = mongoUserDao.getAccessTokenByUser(LoginHelper.getUserId());
 		if(accessToken==null)return "redirect:/bind/sina?callbackUrl=/blog/sina/hometimeline";
 
 		timeline.client.setToken(accessToken.getAccesstoken());
@@ -92,7 +92,7 @@ public class SinaBlogController {
 	}
 
     /**
-     * ajax 微薄分页
+     * ajax 微博分页
      * @param name
      * @param page
      * @param model
@@ -102,7 +102,7 @@ public class SinaBlogController {
     public String homeTimeLinePage(Integer page,Model model) {
 
 		try {
-			SinaAccessToken accessToken = retwis.getAccessTokenByUser(LoginHelper.getUserId());
+			SinaAccessToken accessToken = mongoUserDao.getAccessTokenByUser(LoginHelper.getUserId());
 			timeline.client.setToken(accessToken.getAccesstoken());
 			StatusWapper statusWapper = timeline.getHomeTimeline(0, 0, new Paging(page, 20));
 			model.addAttribute("statusWapper",this.blogTime.getStatusWapperWithFaceImage(statusWapper,timeline));
@@ -155,7 +155,7 @@ public class SinaBlogController {
     public String updateStatus(String content,String pic,HttpServletRequest  resquest,Model model) throws IOException {
     	Status status = null;
 		try {
-			SinaAccessToken accessToken = retwis.getAccessTokenByUser(LoginHelper.getUserId());
+			SinaAccessToken accessToken = mongoUserDao.getAccessTokenByUser(LoginHelper.getUserId());
 			timeline.client.setToken(accessToken.getAccesstoken());
 			if(pic==null || "".equals(pic)){
 			  status = timeline.UpdateStatus(content);
@@ -179,7 +179,7 @@ public class SinaBlogController {
     public String repostFormShow(String content,@PathVariable String id,Model model) throws IOException {
     	Status status = null;
 		try {
-			SinaAccessToken accessToken = retwis.getAccessTokenByUser(LoginHelper.getUserId());
+			SinaAccessToken accessToken = mongoUserDao.getAccessTokenByUser(LoginHelper.getUserId());
 			timeline.client.setToken(accessToken.getAccesstoken());
 			status = timeline.showStatus(id);
 			model.addAttribute("p",status);
@@ -202,7 +202,7 @@ public class SinaBlogController {
     public String repost(String content,@PathVariable String id,Model model) throws IOException {
     	Status status = null;
 		try {
-			SinaAccessToken accessToken = retwis.getAccessTokenByUser(LoginHelper.getUserId());
+			SinaAccessToken accessToken = mongoUserDao.getAccessTokenByUser(LoginHelper.getUserId());
 			timeline.client.setToken(accessToken.getAccesstoken());
 			status = timeline.Repost(id, content, 0);
 			model.addAttribute("p",status);
@@ -222,7 +222,7 @@ public class SinaBlogController {
     @RequestMapping(value = "removeBlogByMe/{id}", method = RequestMethod.POST)
     public @ResponseBody boolean removeBlogByMe(@PathVariable String id,Model model){
 		try {
-			SinaAccessToken accessToken = retwis.getAccessTokenByUser(LoginHelper.getUserId());
+			SinaAccessToken accessToken = mongoUserDao.getAccessTokenByUser(LoginHelper.getUserId());
 			timeline.client.setToken(accessToken.getAccesstoken());
 			Status status = this.timeline.Destroy(id);
 			return true;
@@ -243,7 +243,7 @@ public class SinaBlogController {
 	 */
 	@RequestMapping(value = "usertimeline", method = RequestMethod.GET)
     public String usertimeline(@RequestParam(required = false,defaultValue="1") Integer page,Model model) {
-		SinaAccessToken accessToken = retwis.getAccessTokenByUser(LoginHelper.getUserId());
+		SinaAccessToken accessToken = mongoUserDao.getAccessTokenByUser(LoginHelper.getUserId());
 		timeline.client.setToken(accessToken.getAccesstoken());
 		users.client.setToken(accessToken.getAccesstoken());
 		friendships.client.setToken(accessToken.getAccesstoken());
@@ -284,7 +284,7 @@ public class SinaBlogController {
     public String usertimelinePage(Integer page,Model model) {
 
 		try {
-			SinaAccessToken accessToken = retwis.getAccessTokenByUser(LoginHelper.getUserId());
+			SinaAccessToken accessToken = mongoUserDao.getAccessTokenByUser(LoginHelper.getUserId());
 			StatusWapper statusWapper = timeline.getUserTimelineByUid(accessToken.getUserid(),new Paging(page, 20),0, 0);
 			model.addAttribute("statusWapper",this.blogTime.getStatusWapperWithFaceImage(statusWapper,timeline));
 			model.addAttribute("page",new Paging(page, 20));
@@ -305,7 +305,7 @@ public class SinaBlogController {
      */
     @RequestMapping(value = "faces", method = RequestMethod.GET)
     public @ResponseBody List<Faces> getFaces(Model model) throws WeiboException{
-    	SinaAccessToken accessToken = retwis.getAccessTokenByUser(LoginHelper.getUserId());
+    	SinaAccessToken accessToken = mongoUserDao.getAccessTokenByUser(LoginHelper.getUserId());
     	return this.blogTime.getRemoteExp(accessToken.getAccesstoken());
     }
 

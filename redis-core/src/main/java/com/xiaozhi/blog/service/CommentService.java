@@ -25,7 +25,7 @@ public class CommentService {
     private static Log logger = LogFactory.getLog(CommentService.class);
 
     @Autowired
-    private MongoCommentDao commentDao;
+    private MongoCommentDao mongoCommentDao;
     @Autowired
     MongoUserDao mongoUserDao;
 
@@ -42,7 +42,7 @@ public class CommentService {
     public CommentShow addComment(String pid,Comment comment,String blogOwner,boolean isReplay){
         try {
             comment.setContent(this.mentionUtil.replayFaceImages(comment.getContent()));
-            this.commentDao.addComment(pid, comment,blogOwner,isReplay);
+            this.mongoCommentDao.addComment(pid, comment,blogOwner,isReplay);
             //构建返回的评论对象
             CommentShow commentShow = new CommentShow();
             BeanUtils.copyProperties(comment, commentShow,new String[]{"commentId"});
@@ -69,7 +69,7 @@ public class CommentService {
      */
     public List<CommentShow> getCommentListByPid(String pid,String userid){
 
-        List<CommentShow> comments = this.commentDao.getCommentListByPid(pid,userid);
+        List<CommentShow> comments = this.mongoCommentDao.getCommentListByPid(pid,userid);
 
         return comments;
     }
@@ -81,7 +81,7 @@ public class CommentService {
      * @return
      */
     public boolean removeComment(String pid, String commentId, String uid, String blogOwner){
-        return this.commentDao.removeComment( pid,  commentId,  uid,  blogOwner);
+        return this.mongoCommentDao.removeComment( pid,  commentId,  uid,  blogOwner);
     }
 
     /**
@@ -91,7 +91,7 @@ public class CommentService {
      * @return
      */
     public boolean delCommentForNoBlog(final String uid,final String commentId){
-    	return this.commentDao.delCommentForNoBlog(uid,  commentId);
+    	return this.mongoCommentDao.delCommentForNoBlog(uid,  commentId);
 
     }
 
@@ -103,11 +103,11 @@ public class CommentService {
      * @return
      */
     public ListPage<CommentShow> getCommentListByReceiveCommentByPage(String uid, Integer page,Integer pagesize) {
-    	List<String> commentIds= this.commentDao.getCommentListNum(uid,KeyUtils.receiveComments(uid));
+    	List<String> commentIds= this.mongoCommentDao.getCommentListNum(uid,KeyUtils.receiveComments(uid));
         int firstResult = (page-1)*pagesize;
         int lastResult = firstResult+pagesize-1;
         int allResults = commentIds.size();
-        List<CommentShow> comments=this.commentDao.getCommentList(uid,commentIds, new Range(firstResult,lastResult));
+        List<CommentShow> comments=this.mongoCommentDao.getCommentList(uid,commentIds, new Range(firstResult,lastResult));
         return new ListPage<CommentShow>(comments, firstResult, lastResult, allResults);
     }
 
@@ -119,11 +119,11 @@ public class CommentService {
      * @return
      */
     public ListPage<CommentShow> getCommentListByPostCommentByPage(String uid, Integer page,Integer pagesize) {
-    	List<String> commentIds= this.commentDao.getCommentListNum(uid,KeyUtils.postComments(uid));
+    	List<String> commentIds= this.mongoCommentDao.getCommentListNum(uid,KeyUtils.postComments(uid));
         int firstResult = (page-1)*pagesize;
         int lastResult = firstResult+pagesize-1;
         int allResults = commentIds.size();
-        List<CommentShow> comments=this.commentDao.getCommentList(uid, commentIds,new Range(firstResult,lastResult));
+        List<CommentShow> comments=this.mongoCommentDao.getCommentList(uid, commentIds,new Range(firstResult,lastResult));
         return new ListPage<CommentShow>(comments, firstResult, lastResult, allResults);
     }
 
@@ -137,11 +137,11 @@ public class CommentService {
      * @return
      */
     public ListPage<CommentShow> getCommentListByMentionByPage(String uid, Integer page,Integer pagesize) {
-    	List<String> commentIds= this.commentDao.getCommentListNum(uid,KeyUtils.commentmentions(uid));
+    	List<String> commentIds= this.mongoCommentDao.getCommentListNum(uid,KeyUtils.commentmentions(uid));
         int firstResult = (page-1)*pagesize;
         int lastResult = firstResult+pagesize-1;
         int allResults = commentIds.size();
-        List<CommentShow> comments=this.commentDao.getCommentList(uid, commentIds,new Range(firstResult,lastResult));
+        List<CommentShow> comments=this.mongoCommentDao.getCommentList(uid, commentIds,new Range(firstResult,lastResult));
         return new ListPage<CommentShow>(comments, firstResult, lastResult, allResults);
     }
 

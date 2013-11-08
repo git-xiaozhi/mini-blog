@@ -29,11 +29,11 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
 			throws Exception {
 		// Get the SslHandler in the current pipeline.
         // We added it in SecureChatPipelineFactory.
-        //final SslHandler sslHandler = ctx.getPipeline().get(SslHandler.class);
+        final SslHandler sslHandler = ctx.getPipeline().get(SslHandler.class);
 
         // Get notified when SSL handshake is done.
-        //ChannelFuture handshakeFuture = sslHandler.handshake();
-        //handshakeFuture.addListener(new SslLister(sslHandler));
+        ChannelFuture handshakeFuture = sslHandler.handshake();
+        handshakeFuture.addListener(new SslLister(sslHandler));
 	}
 
 	@Override
@@ -63,7 +63,8 @@ public class ServerHandler extends SimpleChannelUpstreamHandler {
 		if(message instanceof OperatorMessage){
 		  System.out.println("Server --------------Message is: " + message.toString());		
 		  OperatorMessage om = (OperatorMessage) message;
-		  e.getChannel().write(excMethod(om));//执行用户方法
+		  //e.getChannel().write(excMethod(om));//执行用户方法
+		  e.getChannel().write("TEST is over!");
 		}
 
 	}

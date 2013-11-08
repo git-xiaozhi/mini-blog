@@ -71,7 +71,7 @@ public class ProxyServerPipelineFactory implements ChannelPipelineFactory {
           
           p.addLast("executor", executionHandler);
           //此两项为添加心跳机制 10秒查看一次在线的客户端channel是否空闲，IdleStateHandler为netty jar包中提供的类
-          p.addLast("timeout", new IdleStateHandler(hashedWheelTimer, 10, 10, 0));
+          p.addLast("timeout", new IdleStateHandler(hashedWheelTimer, 0, 10, 0));
           p.addLast("hearbeat", new Heartbeat());//此类 实现了IdleStateAwareChannelHandler接口
           
           p.addLast("log",new LoggingHandler(InternalLogLevel.INFO));

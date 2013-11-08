@@ -18,7 +18,7 @@ import org.jboss.netty.util.HashedWheelTimer;
 
 public class ServerHannelFactory implements ChannelPipelineFactory{
 
-	private boolean isSLL = false;
+	private boolean isSLL = true;
 	
     @Override
     public ChannelPipeline getPipeline() throws Exception

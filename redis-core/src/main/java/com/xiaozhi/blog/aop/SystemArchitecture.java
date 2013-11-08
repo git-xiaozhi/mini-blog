@@ -20,5 +20,16 @@ public class SystemArchitecture {
 	@Pointcut("execution(* com.xiaozhi.blog.service.BlogService.post(..))")
 	public void postBlogFuction() {
 	}
+	
+	
+	
+	
+	@Pointcut("execution(* com.xiaozhi.blog.service.other.sina.SinaBlogService.saveSinaPost(..))")
+	public void saveSinaPostFuction() {
+	}
+	
+	@Pointcut("execution(* com.xiaozhi.blog.service.other.sina.SinaBlogService.deleteSinapost(..))")
+	public void deleteSinapostFuction() {
+	}
 
 }

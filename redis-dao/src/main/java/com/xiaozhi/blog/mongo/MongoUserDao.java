@@ -219,9 +219,6 @@ public class MongoUserDao {
      */
     public SinaAccessToken getAccessTokenByUser(String uid){
     	User user = this.mongoTemplate.findOne(new Query(Criteria.where("id").is(uid)),User.class);
-    	if(logger.isDebugEnabled()){
-			logger.debug("--------------------------->user :"+user.toString());
-		}
     	return user.getAccessToken();
     }
 

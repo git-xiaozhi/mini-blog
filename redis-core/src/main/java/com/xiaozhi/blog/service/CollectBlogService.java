@@ -20,7 +20,7 @@ public class CollectBlogService {
 private static Log logger = LogFactory.getLog(CollectBlogService.class);
 
 	@Autowired
-	private  MongoBlogDao blogDao;
+	private  MongoBlogDao mongoBlogDao;
 
 
 	/**
@@ -31,7 +31,7 @@ private static Log logger = LogFactory.getLog(CollectBlogService.class);
 	 */
 	public boolean collectBlog(String uid,String pid){
 
-		return this.blogDao.collectBlog(uid, pid);
+		return this.mongoBlogDao.collectBlog(uid, pid);
 	}
 
 	/**
@@ -42,7 +42,7 @@ private static Log logger = LogFactory.getLog(CollectBlogService.class);
 	 */
 	public boolean removeCollectBlog(String uid, String pid) {
 
-		return this.blogDao.removeCollectBlog(uid, pid);
+		return this.mongoBlogDao.removeCollectBlog(uid, pid);
 	}
 
 
@@ -54,11 +54,11 @@ private static Log logger = LogFactory.getLog(CollectBlogService.class);
 	 * @return
 	 */
 	public ListPage<WebPost> getCollectsByPage(String uid, Integer page,Integer pagesize) {
-		List<String> pids= this.blogDao.getPostsIdList(uid,KeyUtils.collect(uid));
+		List<String> pids= this.mongoBlogDao.getPostsIdList(uid,KeyUtils.collect(uid));
 		int firstResult = (page-1)*pagesize;
 		int lastResult = firstResult+pagesize-1;
 		int allResults = pids.size();
-		List<WebPost> users=this.blogDao.getPosts(pids, new Range(firstResult,lastResult));
+		List<WebPost> users=this.mongoBlogDao.getPosts(pids, new Range(firstResult,lastResult));
 		return new ListPage<WebPost>(users, firstResult, lastResult, allResults);
 	}
 

@@ -172,7 +172,7 @@ public class BlogTime{
 
 
 
-	private Map<String, Emotion> getEmotionsMap(Timeline timeline) throws WeiboException {
+	public Map<String, Emotion> getEmotionsMap(Timeline timeline) throws WeiboException {
 		if(emotionMap!=null)return emotionMap;
     	if(logger.isDebugEnabled())logger.debug("------------------------------> 从新浪api获取！");
 		List<Emotion> meotions=timeline.getEmotions();

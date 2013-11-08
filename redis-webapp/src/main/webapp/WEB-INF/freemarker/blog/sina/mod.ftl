@@ -60,6 +60,43 @@
 </#macro>
 
 
+
+<#macro ajaxTimerPageBar listPage pageMethod maxPages=10 params="{}">
+  <#if listPage.pages gt 1>
+      <#if (listPage.currPage>1)>
+        <a href="#" onclick="efn.util.ajaxPage(${params}, ${listPage.currPage-1}, ${pageMethod}); return false;">上一页</a>
+      <#else>
+        上一页
+      </#if>
+      <#if (listPage.currPage > maxPages/2)>
+        <#local start=(listPage.currPage-maxPages/2)/>
+      <#else>
+        <#local start=1/>
+      </#if>
+      <#local end=(start+maxPages-1)/>
+      <#if (end > listPage.pages)>
+        <#local end=listPage.pages/>
+      </#if>
+      <#if (start < listPage.currPage)>
+        <#list start..(listPage.currPage-1) as i>
+          [<a href="#" onclick="efn.util.ajaxPage(${params}, ${i}, ${pageMethod}); return false;">${i}</a>]
+        </#list>
+      </#if>
+      [${listPage.currPage}]
+      <#if (end > listPage.currPage)>
+        <#list (listPage.currPage+1)..end as i>
+          [<a href="#" onclick="efn.util.ajaxPage(${params}, ${i}, ${pageMethod}); return false;">${i}</a>]
+        </#list>
+      </#if>
+    <#if (listPage.currPage < listPage.pages)>
+      <a href="#" onclick="efn.util.ajaxPage(${params}, ${listPage.currPage+1}, ${pageMethod}); return false;">下一页</a>
+    <#else>
+       下一页
+    </#if>
+  </#if>
+</#macro>
+
+
 <#macro transmitblog p parent>
 
   <div id="" style="width:97%;background:#F3F3F3;padding-left:3%">

@@ -23,8 +23,12 @@
     <dubbo:reference id="userIndexCreater" group="user" interface="solr.index.SolrjIndexCreater">
       <dubbo:method name="addOrUpdateBean" async="true" return="false" />
     </dubbo:reference>
+    
+    <!-- 头像处理服务 -->
+    <dubbo:reference id="imageService" interface="com.xiaozhi.blog.img.ImageService" />
+    
 
-    <dubbo:reference id="echoService" interface="solr.search.EchoService" />
+    <!-- <dubbo:reference id="echoService" interface="solr.search.EchoService" /> -->
 
     <!-- 服务消费者回调 -->
     <!-- <dubbo:reference id="callbackService" interface="callback.CallbackService" />-->
@@ -33,6 +37,6 @@
     <dubbo:consumer check="false" />
 
     <!-- 注册后监控中心才能进行监控 -->
-    <dubbo:monitor protocol="registry" />
+   <!-- <dubbo:monitor protocol="registry" />-->
 
 </beans>

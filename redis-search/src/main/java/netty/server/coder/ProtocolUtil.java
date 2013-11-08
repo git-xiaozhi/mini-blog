@@ -2,9 +2,10 @@ package netty.server.coder;
  
 import java.net.SocketAddress;
 import java.nio.charset.Charset;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
  
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -56,7 +57,7 @@ public class ProtocolUtil {
      * @return
      */
     public static Map<String,String> decode(int encode,ChannelBuffer dataBuffer){
-        Map<String,String> dataMap=new HashMap<String, String>();
+    	ConcurrentMap<String,String> dataMap=new ConcurrentHashMap<String, String>();
         if (dataBuffer!=null && dataBuffer.readableBytes()>0) {
             int processIndex=0,length=dataBuffer.readableBytes();
             //Charset charset=XLCharSetFactory.getCharset(encode);
@@ -77,7 +78,7 @@ public class ProtocolUtil {
                 contents=new byte [size];
                 dataBuffer.readBytes(contents);
                 String value=new String(contents, charset);
-                dataMap.put(key, value);
+                dataMap.putIfAbsent(key, value);
                 processIndex=processIndex+size+4;
             }
         }

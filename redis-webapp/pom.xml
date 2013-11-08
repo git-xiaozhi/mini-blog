@@ -103,6 +103,11 @@
 			<scope>compile</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.jolbox</groupId>
+			<artifactId>bonecp</artifactId>
+		</dependency>
+
 	</dependencies>
 
 </project>

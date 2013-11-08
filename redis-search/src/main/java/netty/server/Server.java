@@ -15,7 +15,7 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
 public class Server {
 	
-	private static final int SERVER_PORT = 8111;
+	private static final int SERVER_PORT = 8000;
 
 	
 	public Server() {
