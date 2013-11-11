@@ -11,7 +11,7 @@
 	<!--<dubbo:application name="search" />-->
 
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
-	<dubbo:registry protocol="zookeeper" address="192.168.19.31:2181" />
+	<dubbo:registry protocol="zookeeper" address="192.168.19.32:2181" />
 
 	<!-- 用dubbo协议在20880端口暴露服务 如果多个服务，
 	     可以设置不同的端口号（同一台机上部署）或者部署在不同的机器上（端口相同IP不同）,

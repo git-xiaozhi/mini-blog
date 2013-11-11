@@ -58,6 +58,7 @@ public class SinaFriendBlogController {
 	@RequestMapping(value = "usertimeline/{uid}", method = RequestMethod.GET)
     public String usertimeline(@RequestParam(required = false,defaultValue="1") Integer page,@PathVariable String uid,Model model) {
 		SinaAccessToken accessToken = (SinaAccessToken)retwis.getAccessTokenByUser(LoginHelper.getUserId());
+		logger.debug("--------------------------->accessToken :"+accessToken.getAccesstoken());
 		timeline.client.setToken(accessToken.getAccesstoken());
 		users.client.setToken(accessToken.getAccesstoken());
 		friendships.client.setToken(accessToken.getAccesstoken());

@@ -56,7 +56,7 @@
 							<src>src/main/resources/</src>
 							<ext>.properties</ext>
 							<includes>*.properties</includes>
-							<dest>target/classes/</dest>
+							<dest>target/redis-webapp/WEB-INF/classes/</dest>
 						</configuration>
 					</execution>
 				</executions>
