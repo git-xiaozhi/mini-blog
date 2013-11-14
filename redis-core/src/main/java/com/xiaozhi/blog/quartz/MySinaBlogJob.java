@@ -36,14 +36,16 @@ public class MySinaBlogJob implements Job {
         if(logger.isDebugEnabled())logger.debug("------------------------------->accessToken :"+accessToken.toString());
 		try {
 			Timeline timeline = (Timeline)cxt.getScheduler().getContext().get("timeline");
+			
 			timeline.client.setToken(accessToken.getAccesstoken());
-/*			if(post.getFilePath()==null || "".equals(post.getFilePath())){
+			if(post.getFilePath()==null || "".equals(post.getFilePath())){
 			  timeline.UpdateStatus(post.getContent());
 			}else{
 			  byte[] picbyte = FileUtil.readFileImage(post.getFilePath());
 			  ImageItem imageItem = new ImageItem("pic", picbyte);
 			  timeline.UploadStatus(java.net.URLEncoder.encode(post.getContent(), "utf-8"), imageItem);
-		   }*/
+		   }
+			
 			SinaBlogDao sinaBlogDao = (SinaBlogDao)cxt.getScheduler().getContext().get("sinaBlogDao");
 			sinaBlogDao.removeSinaPostById(post.getId());
 			//删除对应的图片

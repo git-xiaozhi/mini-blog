@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -149,7 +150,9 @@ public class MongoUserGroupDao {
 	public List<UserGroup> getGroupByUserId(String uid){
 
 		Query query = new Query(Criteria.where("ownerId").is(uid));
-		query.sort().on("orderBy",Order.ASCENDING);//正序
+		//query.sort().on("orderBy",Order.ASCENDING);//正序
+		query.with(new Sort(Sort.Direction.ASC,"orderBy"));
+		
     	List<UserGroup> groups = this.mongoTemplate.find(query,UserGroup.class);
     	return groups;
 	}

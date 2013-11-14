@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Order;
@@ -75,7 +76,9 @@ public class SinaBlogDao {
 		 
 		 Query query = new Query(Criteria.where("uid").is(uid));
 		 query.skip(firstResult).limit(pageSize);
-	     query.sort().on("delaySeconds",Order.ASCENDING);//按延迟发布时间正排序
+	     //query.sort().on("delaySeconds",Order.ASCENDING);//按延迟发布时间正排序
+	     query.with(new Sort(Sort.Direction.ASC,"delaySeconds"));
+	     
 	     List<SinaPost> posts = this.mongoTemplate.find(query,SinaPost.class);
 	      
 		return posts; 

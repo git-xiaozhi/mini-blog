@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Order;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -203,7 +203,9 @@ private static Log logger = LogFactory.getLog(MongoCommentDao.class);
 
     	List<String> keys = this.template.opsForList().range(KeyUtils.commentByBlog(pid), 0,-1);
     	Query query = new Query(Criteria.where("commentId").in(keys.toArray()));
-    	query.sort().on("time",Order.DESCENDING);//按时间倒序
+    	//query.sort().on("time",Order.DESCENDING);//按时间倒序
+    	query.with(new Sort(Sort.Direction.DESC,"time"));//按时间倒序
+    	
     	List<Comment> comments = this.mongoTemplate.find(query,Comment.class);
     	List<CommentShow> commentShows = new ArrayList<CommentShow>();
     	List<String> uids = new ArrayList<String>();//定义当前微博评论所有用户id集合

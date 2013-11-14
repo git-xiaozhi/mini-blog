@@ -71,19 +71,16 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.6.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.0</version>
 			<type>jar</type>
 		</dependency>
 
@@ -114,14 +111,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<version>1.0.1.RELEASE</version>
-		</dependency>
-
-
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -217,12 +206,7 @@
 			<version>4.0.0</version>
 		</dependency>
 
-		<!-- mongodb所依赖的包 -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.0.3.RELEASE</version>
-		</dependency>
+
 
 		<!-- rabbit所依赖的包 -->
 		<dependency>

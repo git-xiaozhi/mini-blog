@@ -44,19 +44,16 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>1.6.0</version>
 			<type>jar</type>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.0</version>
 			<type>jar</type>
 		</dependency>
 
@@ -93,13 +90,6 @@
 			<artifactId>spring-tx</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-redis</artifactId>
-			<version>1.0.1.RELEASE</version>
-			<!-- <exclusions> <exclusion> <groupId>org.springframework</groupId> <artifactId>spring-tx</artifactId>
-				</exclusion> </exclusions> -->
-		</dependency>
 
 
 
@@ -267,13 +257,6 @@
 		</dependency>
 		<!-- simple-spring-memcached所依赖的包结束 -->
 
-		<!-- mongodb所依赖的包 -->
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-mongodb</artifactId>
-			<version>1.0.3.RELEASE</version>
-		</dependency>
-
 		<!-- rabbit所依赖的包 -->
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
@@ -323,7 +306,6 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.13</version>
 		</dependency>
 
 	</dependencies>
