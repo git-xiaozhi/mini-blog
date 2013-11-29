@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 /**
  * @author Ryan Heaton
  */
-@Service
+//@Service
 public class Oauth2AccesServiceImpl implements Oauth2AccesService {
 
 	private static Log logger = LogFactory.getLog(Oauth2AccesServiceImpl.class);

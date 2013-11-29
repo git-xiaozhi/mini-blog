@@ -16,7 +16,6 @@ import weibo4j.Timeline;
 import weibo4j.http.ImageItem;
 
 import com.xiaozhi.blog.mongo.SinaBlogDao;
-import com.xiaozhi.blog.service.other.sina.SinaBlogService;
 import com.xiaozhi.blog.utils.FileUtil;
 import com.xiaozhi.blog.vo.SinaAccessToken;
 import com.xiaozhi.blog.vo.SinaPost;

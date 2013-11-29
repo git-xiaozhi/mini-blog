@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/CLTS_JavaEE/!svn/ver/68/keno-rest/trunk/keno-rest-appserver/src/main/webapp/WEB-INF/spring
+END
+cas-security.xml
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/CLTS_JavaEE/!svn/ver/25/keno-rest/trunk/keno-rest-appserver/src/main/webapp/WEB-INF/spring/cas-security.xml
+END
+quartz.xml
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/CLTS_JavaEE/!svn/ver/25/keno-rest/trunk/keno-rest-appserver/src/main/webapp/WEB-INF/spring/quartz.xml
+END
+quartz.properties
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/CLTS_JavaEE/!svn/ver/25/keno-rest/trunk/keno-rest-appserver/src/main/webapp/WEB-INF/spring/quartz.properties
+END
+rabbitMQ.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/CLTS_JavaEE/!svn/ver/25/keno-rest/trunk/keno-rest-appserver/src/main/webapp/WEB-INF/spring/rabbitMQ.xml
+END
+applicationContext.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/CLTS_JavaEE/!svn/ver/68/keno-rest/trunk/keno-rest-appserver/src/main/webapp/WEB-INF/spring/applicationContext.xml
+END
+security.xml
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/CLTS_JavaEE/!svn/ver/68/keno-rest/trunk/keno-rest-appserver/src/main/webapp/WEB-INF/spring/security.xml
+END

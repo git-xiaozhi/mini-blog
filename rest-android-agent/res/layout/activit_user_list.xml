@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="15dip"
+        android:layout_height="15dip"
+        android:layout_margin="15dip"
+        android:gravity="center"
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="45dip"
+        android:layout_height="45dip"
+        android:src="@drawable/icon" />
+
+    <TextView
+        android:id="@+id/showname"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView1"
+        android:gravity="top"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/registerTime"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageView1"
+        android:layout_alignLeft="@+id/showname"
+        android:layout_alignParentRight="true"
+        android:gravity="top"
+        android:textSize="17sp" />
+
+</RelativeLayout>

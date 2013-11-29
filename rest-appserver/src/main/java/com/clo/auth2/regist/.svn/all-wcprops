@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/CLTS_JavaEE/!svn/ver/68/keno-rest/trunk/keno-rest-appserver/src/main/java/com/clo/auth2/regist
+END
+ClientRegisterController.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/CLTS_JavaEE/!svn/ver/25/keno-rest/trunk/keno-rest-appserver/src/main/java/com/clo/auth2/regist/ClientRegisterController.java
+END
+ClientRegisterServer.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/CLTS_JavaEE/!svn/ver/25/keno-rest/trunk/keno-rest-appserver/src/main/java/com/clo/auth2/regist/ClientRegisterServer.java
+END
+ClientRegisterServerImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/CLTS_JavaEE/!svn/ver/68/keno-rest/trunk/keno-rest-appserver/src/main/java/com/clo/auth2/regist/ClientRegisterServerImpl.java
+END

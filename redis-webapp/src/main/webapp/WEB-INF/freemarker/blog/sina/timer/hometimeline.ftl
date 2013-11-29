@@ -55,7 +55,7 @@
 var imgArray;
 
 $(function(){
- //发微薄
+ //发微博
  $('.blogsubmit').live('click',function(){
    var params;
    if (params == null)params = {};

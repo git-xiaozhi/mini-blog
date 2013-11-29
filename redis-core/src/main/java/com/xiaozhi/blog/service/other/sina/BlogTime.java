@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.xiaozhi.blog.vo.SinaAccessToken;
-import com.xiaozhi.blog.web.others.sina.CommentShow;
 
 
 import weibo4j.Timeline;

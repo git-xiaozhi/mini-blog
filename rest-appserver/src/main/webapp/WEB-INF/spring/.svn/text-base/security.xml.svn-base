@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
+	xmlns:sec="http://www.springframework.org/schema/security" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2-1.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+
+
+	<sec:http pattern="/oauth/token" create-session="stateless" authentication-manager-ref="clientAuthenticationManager" entry-point-ref="oauthAuthenticationEntryPoint">
+		<sec:intercept-url pattern="/oauth/token" access="IS_AUTHENTICATED_FULLY" />
+		<sec:anonymous enabled="false" />
+		<sec:http-basic entry-point-ref="oauthAuthenticationEntryPoint" />
+		<!-- include this only if you need to authenticate clients via request
+			parameters -->
+		<sec:custom-filter ref="clientCredentialsTokenEndpointFilter"
+			before="BASIC_AUTH_FILTER" />
+		<sec:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</sec:http>
+
+    <!-- 受Oauth保护的资源 -->
+	<sec:http pattern="/remote/**" create-session="never" entry-point-ref="oauthAuthenticationEntryPoint" access-decision-manager-ref="accessDecisionManager">
+		<sec:anonymous enabled="false" />
+		<!--<sec:intercept-url pattern="/remote/**" access="ROLE_USER,SCOPE_READ" requires-channel="https"/>测试时候先去掉https协议-->
+		<sec:intercept-url pattern="/remote/**" access="ROLE_USER,SCOPE_READ" requires-channel="http"/>
+		<sec:custom-filter ref="resourceServerFilter" before="PRE_AUTH_FILTER" />
+		<sec:access-denied-handler ref="oauthAccessDeniedHandler" />
+	</sec:http>
+
+	<sec:http access-denied-page="/login.jsp?authorization_error=true" disable-url-rewriting="true" auto-config="true">
+		<sec:intercept-url pattern="/oauth/**" access="ROLE_USER" />
+		<sec:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
+		<sec:remember-me services-ref="rememberMeServices" />
+
+		<sec:form-login authentication-failure-url="/login.jsp?authentication_error=true"
+			default-target-url="/index.jsp" login-page="/login.jsp"
+			login-processing-url="/login.do" />
+		<sec:logout logout-success-url="/index.jsp" logout-url="/logout.do" />
+		<sec:anonymous />
+	</sec:http>
+
+
+	<bean id="oauthAuthenticationEntryPoint"
+		class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint">
+		<property name="realmName" value="keno-rest-appserver" />
+	</bean>
+
+	<bean id="oauthAccessDeniedHandler"
+		class="org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler" />
+
+	<bean id="clientCredentialsTokenEndpointFilter"
+		class="org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter">
+		<property name="authenticationManager" ref="clientAuthenticationManager" />
+	</bean>
+
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+		<constructor-arg>
+			<list>
+				<bean class="org.springframework.security.oauth2.provider.vote.ScopeVoter" />
+				<bean class="org.springframework.security.access.vote.RoleVoter" />
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+			</list>
+		</constructor-arg>
+	</bean>
+
+
+	<sec:authentication-manager id="clientAuthenticationManager">
+		<sec:authentication-provider user-service-ref="clientDetailsUserService" />
+	</sec:authentication-manager>
+
+   <!--
+	<sec:authentication-manager alias="authenticationManager">
+		<sec:authentication-provider>
+			<sec:user-service>
+				<sec:user name="marissa" password="koala" authorities="ROLE_USER,ROLE_CLIENT" />
+				<sec:user name="paul" password="emu" authorities="ROLE_USER" />
+			</sec:user-service>
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+  -->
+<!--#####################本系统认证开始###############################-->
+  <sec:authentication-manager alias="authenticationManager">
+    <sec:authentication-provider ref="daoAuthenticationProvider"/>
+    <sec:authentication-provider ref="rememberMeAuthenticationProvider"/>
+  </sec:authentication-manager>
+
+  <bean id="daoAuthenticationProvider"
+         class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+      <property name="userDetailsService" ref="customUserDetailsService" />
+      <!--<property name="passwordEncoder" ref="md5PasswordEncoder" />--><!--如果无此项则默认是明码密码 -->
+  </bean>
+  <bean id="md5PasswordEncoder" class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" />
+
+  <bean id="customUserDetailsService" class="com.tianji.test.core.cas.UserDetailsServiceImpl">
+    <property name="userDao" ref="userDao" />
+  </bean>
+
+  <bean id="userDao" class="com.tianji.test.core.cas.dao.UserDaoImpl">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+
+  <bean id="rememberMeServices"
+    class="org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices">
+    <property name="userDetailsService" ref="customUserDetailsService" />
+    <property name="key" value="springsecurityCookies1" />
+    <property name="alwaysRemember" value="true"></property>
+    <property name="tokenValiditySeconds" value="86400"></property>
+    <property name="parameter" value="_spring_security_remember_me"></property>
+  </bean>
+
+  <bean id="rememberMeAuthenticationProvider"
+        class="org.springframework.security.authentication.RememberMeAuthenticationProvider">
+        <property name="key" value="springsecurityCookies1" />
+ </bean>
+<!--#####################本系统认证结束###############################-->
+
+
+	<oauth:authorization-server client-details-service-ref="clientDetails" token-services-ref="tokenServices"
+		user-approval-handler-ref="userApprovalHandler">
+		<oauth:authorization-code />
+		<oauth:implicit />
+		<oauth:refresh-token />
+		<oauth:client-credentials />
+		<oauth:password />
+	</oauth:authorization-server>
+
+	<oauth:resource-server id="resourceServerFilter" resource-id="imageserver" token-services-ref="tokenServices" />
+
+    <bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.JdbcTokenStore">
+      <constructor-arg ref="dataSource" />
+    </bean>
+
+	<bean id="tokenServices"
+		class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">
+		<property name="tokenStore" ref="tokenStore" />
+		<property name="supportRefreshToken" value="true" />
+		<property name="clientDetailsService" ref="clientDetails" />
+	</bean>
+
+	<bean id="clientDetailsUserService"
+		class="org.springframework.security.oauth2.provider.client.ClientDetailsUserDetailsService">
+		<constructor-arg ref="clientDetails" />
+	</bean>
+
+	<!-- Override the default mappings for approval and error pages -->
+	<bean id="accessConfirmationController" class="com.clo.auth2.AccessConfirmationController">
+		<property name="clientDetailsService" ref="clientDetails" />
+	</bean>
+
+	<bean id="userApprovalHandler" class="com.clo.auth2.KenoUserApprovalHandler">
+		<property name="autoApproveClients">
+			<set>
+				<value>my-less-trusted-autoapprove-client</value>
+				<value>tonr</value>
+			</set>
+		</property>
+		<property name="tokenServices" ref="tokenServices" />
+	</bean>
+
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		p:location="/WEB-INF/configuration.properties" />
+
+
+	<bean id="clientDetails"
+	class="org.springframework.security.oauth2.provider.JdbcClientDetailsService">
+	  <constructor-arg ref="dataSource" />
+	</bean>
+
+</beans>
